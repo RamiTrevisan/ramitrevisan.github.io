@@ -97,17 +97,16 @@ function eliminarFavorito(fecha, id) {
 
 // Función para imprimir la tabla
 function printTable() {
-  // Abre una nueva ventana donde se va a ir a cargando dinamicamente la tabla, al estar cargada en divs, es necesario darle un formato de tabla
+  // Abre una nueva ventana para imprimir la tabla
   var printWindow = window.open("", "", "height=600,width=800");
 
-  // encabezado de la tabla
+  // Crea el encabezado de la tabla
   var content = `
         <table>
             <thead>
                 <tr>
                     <th>FECHA</th>
                     <th>MONEDA</th>
-                   
                     <th>COMPRA</th>
                     <th>VENTA</th>
                 </tr>
@@ -115,21 +114,17 @@ function printTable() {
             <tbody>
     `;
 
-  // Agregar las filas de datos dinámicamente
-  document
-    .querySelectorAll("#container-content .fecha-header") //selecciona todos los elementos con la clase fecha-header dentro del contenedor container-content
-    .forEach((fechaHeader) => {
+  // Agrega las filas de datos dinámicamente
+  document.querySelectorAll("#container-content .fecha-header")
+    document.forEach((fechaHeader) => {
       const fecha = fechaHeader.textContent;
-      content += `<tr><td colspan="5" style="font-weight:bold;">${fecha}</td></tr>`; //añade la fila
+      content += `<tr><td colspan="5" style="font-weight:bold;">${fecha}</td></tr>`;
 
-      let nextSibling = fechaHeader.nextElementSibling; //obtiene el siguiente elemento
+      let nextSibling = fechaHeader.nextElementSibling;
       while (nextSibling && !nextSibling.classList.contains("fecha-header")) {
-        //Continúa iterando mientras el siguiente hermano exista y no sea otro fecha-header
         if (nextSibling.classList.contains("element")) {
-          //si tiene la clase element es una fila de datos nueva
           content += "<tr>";
           nextSibling.querySelectorAll("div:not(.accion)").forEach((cell) => {
-            //excluye la clase accion para que no aparezca delete en la tabla
             content += `<td>${cell.innerHTML}</td>`;
           });
           content += "</tr>";
@@ -143,7 +138,7 @@ function printTable() {
         </table>
     `;
 
-  // Se crea una nueva ventana donde se va a insertar el contenido creado arriba y que luego sera mandado a imprimir
+  // Inserta el contenido creado en la nueva ventana
   printWindow.document.write("<html><head><title>Cotizacion</title>");
   printWindow.document.write("<style>");
   printWindow.document.write(
@@ -157,15 +152,14 @@ function printTable() {
   printWindow.document.write(content);
   printWindow.document.write("</body></html>");
 
-  // Cerrar el documento para que se procese el contenido
+  // Cierra el documento para que se procese el contenido
   printWindow.document.close();
 
-  // Esperar a que todo se cargue y luego imprimir
+  // Espera a que todo se cargue y luego imprime
   printWindow.onload = function () {
     printWindow.print();
-
   };
 }
 
-// Llamar a la función para generar la tabla al cargar la página
+// Llama a la función para generar la tabla al cargar la página
 window.onload = generarTabla;
