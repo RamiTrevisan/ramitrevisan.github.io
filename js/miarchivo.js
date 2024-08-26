@@ -96,7 +96,6 @@ function eliminarFavorito(fecha, id) {
 }
 
 // Función para imprimir la tabla
-// Función para imprimir la tabla
 function printTable() {
   // Abre una nueva ventana para imprimir la tabla
   var printWindow = window.open("", "", "height=600,width=800");
@@ -108,7 +107,6 @@ function printTable() {
                 <tr>
                     <th>FECHA</th>
                     <th>MONEDA</th>
-                    <th>ID</th>
                     <th>COMPRA</th>
                     <th>VENTA</th>
                 </tr>
@@ -116,26 +114,24 @@ function printTable() {
             <tbody>
     `;
 
-  // Selecciona todos los elementos con la clase "fecha-header"
-  const fechas = document.querySelectorAll("#container-content .fecha-header");
-
   // Agrega las filas de datos dinámicamente
-  fechas.forEach((fechaHeader) => {
-    const fecha = fechaHeader.textContent;
-    content += `<tr><td colspan="5" style="font-weight:bold;">${fecha}</td></tr>`;
+  document.querySelectorAll("#container-content .fecha-header")
+    document.forEach((fechaHeader) => {
+      const fecha = fechaHeader.textContent;
+      content += `<tr><td colspan="5" style="font-weight:bold;">${fecha}</td></tr>`;
 
-    let nextSibling = fechaHeader.nextElementSibling;
-    while (nextSibling && !nextSibling.classList.contains("fecha-header")) {
-      if (nextSibling.classList.contains("element")) {
-        content += "<tr>";
-        nextSibling.querySelectorAll("div:not(.accion)").forEach((cell) => {
-          content += `<td>${cell.innerHTML}</td>`;
-        });
-        content += "</tr>";
+      let nextSibling = fechaHeader.nextElementSibling;
+      while (nextSibling && !nextSibling.classList.contains("fecha-header")) {
+        if (nextSibling.classList.contains("element")) {
+          content += "<tr>";
+          nextSibling.querySelectorAll("div:not(.accion)").forEach((cell) => {
+            content += `<td>${cell.innerHTML}</td>`;
+          });
+          content += "</tr>";
+        }
+        nextSibling = nextSibling.nextElementSibling;
       }
-      nextSibling = nextSibling.nextElementSibling;
-    }
-  });
+    });
 
   content += `
             </tbody>
